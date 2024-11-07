@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using MyApp.Core.Interfaces;
+using MyApp.Core.Options;
 using MyApp.Infrastructure.Data;
 using MyApp.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MyApp.Infrastructure.Services;
 
 namespace MyApp.Infrastructure
 {
@@ -16,11 +13,18 @@ namespace MyApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructureDI(this IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(
-                opt => opt.UseSqlServer("Server=Dipesh;Database=CleanArchitectureDB;Trusted_Connection=True;TrustServerCertificate=true;MultipleActiveResultSets=true"));
+            services.AddDbContext<ApplicationDbContext>((provider, options) =>
+            {
 
-            services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+            //opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+           options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection);
+                
+        });
+
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IExternalVendorRepository, ExternalVendorRepository>();
+            services.AddHttpClient<CoindeskHttpClientService>();
             return services;
         }
-    }
+}
 }
