@@ -15,15 +15,22 @@ namespace MyApp.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>((provider, options) =>
             {
-
-            //opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-           options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection);
-                
-        });
+                options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection);
+            });
 
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IExternalVendorRepository, ExternalVendorRepository>();
-            services.AddHttpClient<CoindeskHttpClientService>();
+
+            services.AddHttpClient<ICoindeskHttpClientService, CoindeskHttpClientService>(option =>
+            {
+                option.BaseAddress = new Uri("https://api.coindesk.com/v1/");
+            });
+
+            services.AddHttpClient<IJokeHttpClientService, JokeHttpClientService>(option =>
+            {
+                option.BaseAddress = new Uri("https://official-joke-api.appspot.com/");
+            });
+
             return services;
         }
 }

@@ -1,5 +1,6 @@
 using MyApp.API;
 using MyApp.Core.Options;
+using MyApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddSwaggerGen();
 //builder.Services.Configure<ConnectionStringOptions>(builder.Configuration.GetSection(ConnectionStringOptions.SectionName));
 
 builder.Services.AddAPIDI(builder.Configuration);
+//builder.Services.AddInfrastructureDI(builder.Configuration);
+
 
 var app = builder.Build();
 

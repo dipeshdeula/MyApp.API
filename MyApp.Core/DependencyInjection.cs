@@ -14,6 +14,7 @@ namespace MyApp.Core
         public static IServiceCollection AddCoreDI (this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ConnectionStringOptions>(configuration.GetSection(ConnectionStringOptions.SectionName));
+            //services.Configure<CoindeskApiOptions>(configuration.GetSection(CoindeskApiOptions.BaseName));
             return services;
         }
     }

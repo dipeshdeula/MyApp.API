@@ -9,8 +9,8 @@ namespace MyApp.API
         public static IServiceCollection AddAPIDI(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddApplicationDI()
-               .AddInfrastructureDI()
-               .AddCoreDI(configuration);
+                .AddInfrastructureDI()
+                .AddCoreDI(configuration);
             return services;
         }
     }

@@ -14,7 +14,7 @@ namespace MyApp.Application.Queries
     public class GetCoindeskDataQueryHandler(IExternalVendorRepository externalVendorRepository)
         : IRequestHandler<GetCoindeskDataQuery,CoindeskData>
     {
-        public async Task<dynamic> Handle(GetCoindeskDataQuery request, CancellationToken cancel)
+        public async Task<CoindeskData> Handle(GetCoindeskDataQuery request, CancellationToken cancel)
         {
             return await externalVendorRepository.GetData();
     }

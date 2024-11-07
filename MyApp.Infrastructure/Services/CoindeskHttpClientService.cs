@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyApp.Infrastructure.Services
 {
-    public class CoindeskHttpClientService
+    public class CoindeskHttpClientService : ICoindeskHttpClientService
     {
         private readonly HttpClient _httpClient;
 
@@ -18,9 +18,9 @@ namespace MyApp.Infrastructure.Services
         }
 
         public async Task<CoindeskData> GetData()
-        { 
-            return await _httpClient.GetFromJsonAsync<CoindeskData>("https://api.coindesk.com/v1/bpi/currentprice.json");
+        {
+            return await _httpClient.GetFromJsonAsync<CoindeskData>("bpi/currentprice.json");
         }
     }
-    
+
 }
